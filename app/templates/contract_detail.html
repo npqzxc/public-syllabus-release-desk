@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Course Studio 内容流程详情{% endblock %}
+{% block content %}
+{% if contract %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">{{ contract.vendor.code }} / 内容流程 #{{ contract.id }}</p>
+    <h2>{{ contract.title }}</h2>
+    <p>{{ contract.vendor.name }} · 负责人 {{ contract.vendor.owner_name }}</p>
+  </div>
+</header>
+<section class="detail-grid">
+  <article class="panel">
+    <div class="ticket-meta">
+      <span class="badge">{{ contract.status }}</span>
+      <span class="badge">{{ contract.sla_level }}</span>
+      <span>续约日：{{ contract.renewal_date }}</span>
+      <span>流程阶段：{{ contract.procurement_stage }}</span>
+      <span>自动续约：{{ "是" if contract.auto_renew else "否" }}</span>
+    </div>
+    <p class="summary-text">年度支出：${{ "%.0f"|format(contract.annual_spend) }}</p>
+    <section class="panel nested-panel">
+      <div class="panel-header"><h3>评审记录</h3><span>{{ contract.notes|length }} 条</span></div>
+      {% for note in contract.notes %}
+      <article class="comment-card">
+        <div class="comment-meta"><strong>{{ note.author_name }}</strong><span>{{ note.note_type }} · {{ note.created_at }}</span></div>
+        <p>{{ note.body }}</p>
+      </article>
+      {% endfor %}
+    </section>
+  </article>
+  <aside class="panel">
+    <form class="stack-form compact-form" method="post" action="{{ url_for('web.contract_update_status', contract_id=contract.id) }}">
+      <label>更新状态
+        <select name="status">
+          {% for value in ["draft", "review", "active", "risk", "closed"] %}
+          <option value="{{ value }}" {% if contract.status == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button type="submit">保存状态</button>
+    </form>
+    <div id="risk-panel"></div>
+    <form class="stack-form compact-form" method="post" action="{{ url_for('web.contract_add_note', contract_id=contract.id) }}">
+      <label>记录类型
+        <select name="note_type">
+          <option value="general">general</option>
+          <option value="legal">legal</option>
+          <option value="security">security</option>
+          <option value="operations">operations</option>
+        </select>
+      </label>
+      <label>评审记录<textarea name="body" rows="6" required></textarea></label>
+      {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+      <button type="submit">添加记录</button>
+    </form>
+  </aside>
+</section>
+{% else %}
+<section class="panel"><h2>内容流程不存在</h2></section>
+{% endif %}
+{% endblock %}

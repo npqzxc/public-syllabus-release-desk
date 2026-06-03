@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Course Studio 课程列表{% endblock %}
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">课程池</p>
+    <h2>课程列表</h2>
+    <p>按状态、分类、负责人或关键字筛选当前课程。</p>
+  </div>
+</header>
+<section class="vendors-layout">
+  <div class="vendors-main">
+    <section class="panel filter-panel">
+      <form class="filter-grid" method="get" action="{{ url_for('web.vendors') }}">
+        <label>关键字<input name="query" value="{{ filters.get('query', '') }}" placeholder="vendor code / name" /></label>
+        <label>状态
+          <select name="status">
+            <option value="">全部</option>
+            {% for value in ["active", "review", "risk", "paused"] %}
+            <option value="{{ value }}" {% if filters.get('status') == value %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>分类
+          <select name="category">
+            <option value="">全部</option>
+            {% for value in ["infra", "sales_ops", "security", "productivity"] %}
+            <option value="{{ value }}" {% if filters.get('category') == value %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>负责人
+          <select name="owner">
+            <option value="">全部</option>
+            {% for owner in owners %}
+            <option value="{{ owner.username }}" {% if filters.get('owner') == owner.username %}selected{% endif %}>{{ owner.display_name }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button type="submit">应用筛选</button>
+      </form>
+    </section>
+    <section class="panel">
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>课程</th>
+            <th>状态</th>
+            <th>分类</th>
+            <th>负责人</th>
+            <th>内容流程数</th>
+            <th>续约分</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for vendor in vendors %}
+          <tr>
+            <td><a href="{{ url_for('web.vendor_detail', code=vendor.code) }}">{{ vendor.code }}</a></td>
+            <td>{{ vendor.name }}</td>
+            <td>{{ vendor.status }}</td>
+            <td>{{ vendor.category }}</td>
+            <td>{{ vendor.owner_name }}</td>
+            <td>{{ vendor.contract_count }}</td>
+            <td>{{ vendor.renewal_score }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <aside class="vendors-side">
+    <section class="panel" id="vendor-filter-panel"></section>
+  </aside>
+</section>
+{% endblock %}

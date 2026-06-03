@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Course Studio 登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body data-page="login">
+    <section class="login-card">
+      <div class="hero-copy">
+        <p class="eyebrow">课程运营协作</p>
+        <h2>统一跟踪课程风险、续约节奏和评审进展。</h2>
+        <p>默认账号：<code>cora</code> / <code>course123</code></p>
+      </div>
+      <form class="login-form" method="post" action="{{ url_for('web.login_submit') }}">
+        <label>用户名<input name="username" autocomplete="username" required /></label>
+        <label>密码<input type="password" name="password" autocomplete="current-password" required /></label>
+        {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+        <button type="submit">进入系统</button>
+      </form>
+    </section>
+    <script id="page-bootstrap" type="application/json">{{ page_payload|tojson }}</script>
+  </body>
+</html>

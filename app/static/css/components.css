@@ -1,0 +1,20 @@
+.panel, .metric-card, .login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+.panel, .metric-card { padding: 1.3rem; }
+.metric-card strong { display: block; margin-top: 0.4rem; font-size: 2rem; }
+.panel-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.badge {
+  display: inline-flex; align-items: center; padding: 0.35rem 0.65rem;
+  border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.85rem;
+}
+.ticket-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+.comment-card { padding: 1rem; border-radius: 18px; background: rgba(255,255,255,0.72); border: 1px solid rgba(29, 27, 25, 0.08); }
+.comment-card + .comment-card { margin-top: 0.8rem; }
+.comment-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); }
+.insight-list, .feed-list { display: grid; gap: 0.8rem; }
+.insight-row, .feed-item, .preview-card { border-radius: 18px; padding: 1rem; background: rgba(141, 76, 41, 0.06); }
+.nested-panel { margin-top: 1rem; }

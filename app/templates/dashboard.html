@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Course Studio 仪表盘{% endblock %}
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">总览</p>
+    <h2>课程仪表盘</h2>
+    <p>跟踪课程数量、即将续约内容流程和未关闭风险。</p>
+  </div>
+</header>
+<section class="metric-grid">
+  <article class="metric-card"><span>课程总数</span><strong>{{ dashboard.vendor_total }}</strong></article>
+  <article class="metric-card"><span>生效内容流程</span><strong>{{ dashboard.active_contracts }}</strong></article>
+  <article class="metric-card"><span>未关闭风险</span><strong>{{ dashboard.open_risks }}</strong></article>
+  <article class="metric-card"><span>年度支出</span><strong>${{ "%.0f"|format(dashboard.annual_spend) }}</strong></article>
+</section>
+<section class="dashboard-layout">
+  <div class="dashboard-main">
+    <section class="panel" id="renewal-feed-panel"></section>
+  </div>
+  <aside class="dashboard-side">
+    <section class="panel" id="risk-summary-panel"></section>
+  </aside>
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Course Studio 新建内容流程{% endblock %}
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">内容流程录入</p>
+    <h2>新建内容流程</h2>
+    <p>在提交前先确认课程、状态、续约日期和金额信息。</p>
+  </div>
+</header>
+<section class="form-layout">
+  <section class="panel">
+    <form class="stack-form" id="contract-form" method="post" action="{{ url_for('web.contract_create') }}">
+      <label>课程
+        <select name="vendor_id">
+          {% for vendor in options.vendors %}
+          <option value="{{ vendor.id }}" {% if form and form.get('vendor_id') == vendor.id|string %}selected{% endif %}>{{ vendor.code }} · {{ vendor.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>内容流程标题<input name="title" value="{{ form.get('title', '') if form else '' }}" required /></label>
+      <label>状态
+        <select name="status">
+          {% for value in options.statuses %}
+          <option value="{{ value }}" {% if form and form.get('status') == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>年支出<input type="number" step="0.01" name="annual_spend" value="{{ form.get('annual_spend', '') if form else '' }}" required /></label>
+      <label>续约日期<input type="date" name="renewal_date" value="{{ form.get('renewal_date', '') if form else '' }}" required /></label>
+      <label>SLA
+        <select name="sla_level">
+          {% for value in options.sla_levels %}
+          <option value="{{ value }}" {% if form and form.get('sla_level') == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label>流程阶段
+        <select name="procurement_stage">
+          {% for value in options.procurement_stages %}
+          <option value="{{ value }}" {% if form and form.get('procurement_stage') == value %}selected{% endif %}>{{ value }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="inline-check"><input type="checkbox" name="auto_renew" {% if form and form.get('auto_renew') %}checked{% endif %} /> 自动续约</label>
+      {% if error %}<p class="form-error">{{ error }}</p>{% endif %}
+      <button type="submit">创建内容流程</button>
+    </form>
+  </section>
+  <aside class="panel" id="contract-preview-panel"></aside>
+</section>
+{% endblock %}

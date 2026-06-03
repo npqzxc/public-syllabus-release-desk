@@ -1,0 +1,10 @@
+.login-card {
+  max-width: 980px; margin: 8vh auto; display: grid; grid-template-columns: 1.2fr 0.9fr; overflow: hidden;
+}
+.hero-copy { padding: 2.4rem; background: linear-gradient(135deg, rgba(141, 76, 41, 0.14), rgba(237, 201, 168, 0.28)); }
+.hero-copy h2 { font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.04; margin: 0.2rem 0 1rem; }
+.login-form { padding: 2.4rem; display: grid; gap: 1rem; align-content: center; }
+.form-error { color: #a22e2e; margin: 0; }
+.summary-text { color: var(--muted); }
+.inline-check { display: flex !important; gap: 0.6rem; align-items: center; }
+.inline-check input { width: auto; }

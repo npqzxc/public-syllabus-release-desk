@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Course Studio 课程详情{% endblock %}
+{% block content %}
+{% if vendor %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">{{ vendor.code }}</p>
+    <h2>{{ vendor.name }}</h2>
+    <p>{{ vendor.summary }}</p>
+  </div>
+</header>
+<section class="detail-grid">
+  <article class="panel">
+    <div class="ticket-meta">
+      <span class="badge">{{ vendor.status }}</span>
+      <span class="badge">{{ vendor.category }}</span>
+      <span>负责人：{{ vendor.owner_name }}</span>
+      <span>续约分：{{ vendor.renewal_score }}</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>内容流程</th>
+          <th>状态</th>
+          <th>续约日</th>
+          <th>年支出</th>
+          <th>风险</th>
+          <th>记录</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contract in vendor.contracts %}
+        <tr>
+          <td><a href="{{ url_for('web.contract_detail', contract_id=contract.id) }}">{{ contract.title }}</a></td>
+          <td>{{ contract.status }}</td>
+          <td>{{ contract.renewal_date }}</td>
+          <td>${{ "%.0f"|format(contract.annual_spend) }}</td>
+          <td>{{ contract.risk_count }}</td>
+          <td>{{ contract.note_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </article>
+</section>
+{% else %}
+<section class="panel"><h2>课程不存在</h2></section>
+{% endif %}
+{% endblock %}

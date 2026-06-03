@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Course Studio{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body data-page="{{ page_id }}">
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">VH</div>
+          <div>
+            <h1>Course Studio</h1>
+            <p>课程内容流程工作台</p>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="{{ url_for('web.dashboard') }}">仪表盘</a>
+          <a href="{{ url_for('web.vendors') }}">课程</a>
+          <a href="{{ url_for('web.contract_new') }}">新建内容流程</a>
+          <a href="{{ url_for('api.dashboard_api') }}">Dashboard API</a>
+          <a href="{{ url_for('api.vendors_api') }}">Vendors API</a>
+        </nav>
+        {% if current_user %}
+        <div class="user-chip">
+          <div>
+            <strong>{{ current_user.display_name }}</strong>
+            <span>{{ current_user.role }}</span>
+          </div>
+          <form method="post" action="{{ url_for('web.logout_submit') }}">
+            <button class="ghost-button" type="submit">退出</button>
+          </form>
+        </div>
+        {% endif %}
+      </aside>
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+    <script id="page-bootstrap" type="application/json">{{ page_payload|tojson }}</script>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
